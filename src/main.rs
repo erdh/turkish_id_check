@@ -29,10 +29,7 @@ fn main() {
         process::exit(1);
     });
  
-    info!(
-        "- The input entered by User is {}.", //if a number have been entered, the number is logged
-        user_input,
-    );
+    info!("- The input entered by User is {}.",user_input); //if a number have been entered, the number is logged
 
 
     unsafe{
@@ -41,8 +38,7 @@ fn main() {
             info!("Sayı 11 haneli, devam ediliyor")//if the input has 11 numbers, it is logged and program continiues
         }
         else {
-            info!("Sayı 11 haneli değil, işlem başa alınıyor...");//if the input doesn't have 11 numbers, it is logged and program starts from begging
-            warn!("Girilen rakam sayısı: {}!",res);//logging of numbers entered
+            warn!("Sayı 11 haneli değil, girilen rakam sayısı {}! İşlem başa alınıyor...",res);//if the input doesn't have 11 numbers, it is logged and program starts from begging
         }
     }
 

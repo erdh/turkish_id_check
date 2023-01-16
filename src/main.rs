@@ -22,18 +22,17 @@ fn main() {
     io::stdout().flush().unwrap();
 
     let tc_no = get_input().trim().parse::<i64>().unwrap();
-    let digits: Vec<_> = tc_no.to_string().chars().map(|d| d.to_digit(10).unwrap()).collect();
-    let sayi:i64 = tc_no;
-    info!("- The input entered by User is {}.",sayi); //if a number have been entered, the number is logged
+    let rakamlar: Vec<_> = tc_no.to_string().chars().map(|d| d.to_digit(10).unwrap()).collect();
+    info!("- The input entered by User is {}.",tc_no); //if a number have been entered, the number is logged
 
-        let sayim = digits.iter().count();
+        let sayim = rakamlar.iter().count();
         if sayim == 11 {
             info!("Sayı 11 haneli, devam ediliyor");//if the input has 11 numbers, it is logged and program continues
-            let digits = x(sayi as usize);
+            let digits = x(tc_no as usize);
                 println!("{:?}", digits);
         }
         else {
-            warn!("Sayı 11 haneli değil, girilen rakam sayısı {}! İşlem başa alınıyor...",sayim);//if the input doesn't have 11 numbers, it is logged and program starts from begging
+            warn!("Sayı 11 haneli değil, girilen rakam sayısı {}! İşlem başa alınıyor...",sayim);//if the input doesn't have 11 numbers, it is logged and program starts from 'begin point
             continue 'begin
         }
 

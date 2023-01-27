@@ -6,6 +6,7 @@ extern crate goto; //for goto
 
 use log::{info, warn}; //using info and warn logging for now
 
+
 fn main() {
 
     env_logger::init(); //initialise logging
@@ -22,23 +23,80 @@ fn main() {
 
     info!("- The input entered by User is {}.",tc_no); //if a number have been entered, the number is logged
 
-        let digits = x(tc_no as usize);
+        let mut digits = x(tc_no as usize); //converting the input to a vector
+
+        let oddnumbers = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];//i know that does not make sense but this is how vectors work ig?
+
+        let evennumbers = digits[1] + digits[3] + digits[5] + digits[7];
+
+        let mut muthistoplam:usize = digits[0..10].iter().sum();
 
         let sayim = digits.len(); //counting vector
 
+
         if sayim == 11 {
             info!("Sayı 11 haneli, devam ediliyor");//if the input has 11 numbers, it is logged and program continues
-            let digits = x(tc_no as usize);
-            println!("{:?}", digits);
+            println!("{:?}", digits); //for debugging purposes
+            //let oddnumbers = partition_by_parity();
+            println!("{:?}", digits[2]);
+            //let oddtotal = digits;
+            //println!("{}", oddtotal);
+            //stupid_total(digits);
+            println!("{}, {}", oddnumbers, evennumbers);
+            let mut  tc_hesap = oddnumbers * 7 - evennumbers;
+            tc_check(tc_hesap, digits, muthistoplam);
+            //divider(digits); //dividing digits and printing them
         }
         else {
-            warn!("Sayı 11 haneli değil, girilen rakam sayısı {}! İşlem başa alınıyor...",sayim);//if the input doesn't have 11 numbers, it is logged and program starts from 'begin point
+            warn!("Sayı 11 haneli değil, girilen rakam sayısı {}! İşlem başa alınıyor...", sayim);//if the input doesn't have 11 numbers, it is logged and program starts from 'begin point
             continue 'begin
         }
 
         ];
 
+
 }
+
+fn tc_check(mut tc_hesap: usize, digits: Vec<usize>, muthistoplam: usize) {
+    if tc_hesap >= 0 {
+
+        info!("Passed more than 0 test {}", tc_hesap);
+
+        tc_hesap += 10;
+
+        info!("the new hesap is {}", tc_hesap);
+
+        if digits[9] == tc_hesap % 10 {
+
+            info!("muthistoplam: {}", muthistoplam);
+
+            if digits[10] == muthistoplam % 10 {
+                println!("Becerdin mal!");
+            }
+        }
+        else {
+            warn!("Beceremedin mal! al sana hata! {}, {}", digits[9], tc_hesap / 10);
+        }
+    }
+}
+
+
+pub fn divider(digits: Vec<usize>) { //the divider, divides the vector and prints it, the vector needs to be usize ofc
+    for oddnumber in digits.iter().enumerate().step_by(2) {
+        println!("{:?}", oddnumber);
+        let guacamole = oddnumber;
+        println!("{:?}", guacamole)
+        //let sum: usize = oddnumber.iter().sum();
+        //println!("{}", sum)
+    }
+}
+
+ /*pub fn partition_by_parity(nums: &mut [i64]) {
+    let (even, odd): (Vec<_>, Vec<_>) = nums.iter().partition(|&x| x % 2 == 0);
+    nums[..odd.len()].copy_from_slice(&odd);
+    nums[odd.len()..].copy_from_slice(&even);
+}
+  */
 
 fn x(n: usize) -> Vec<usize> {
     fn x_inner(n: usize, xs: &mut Vec<usize>) {
@@ -51,6 +109,7 @@ fn x(n: usize) -> Vec<usize> {
     x_inner(n, &mut xs);
     xs
 }
+
 fn get_input() -> String {
     let mut buffer = String::new();
     io::stdin().read_line(&mut buffer).expect("Failed");

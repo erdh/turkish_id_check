@@ -23,13 +23,13 @@ fn main() {
 
     info!("- The input entered by User is {}.",tc_no); //if a number have been entered, the number is logged
 
-        let mut digits = x(tc_no as usize); //converting the input to a vector
+        let digits = x(tc_no as usize); //converting the input to a vector
 
-        let oddnumbers = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];//i know that does not make sense but this is how vectors work ig?
+        let oddnumbers:usize = digits[0..10].iter().step_by(2).sum();
 
-        let evennumbers = digits[1] + digits[3] + digits[5] + digits[7];
+        let evennumbers:usize = digits[1..7].iter().step_by(2).sum();
 
-        let mut muthistoplam:usize = digits[0..10].iter().sum();
+        let muthistoplam:usize = digits[0..10].iter().sum();
 
         let sayim = digits.len(); //counting vector
 
@@ -43,7 +43,7 @@ fn main() {
             //println!("{}", oddtotal);
             //stupid_total(digits);
             println!("{}, {}", oddnumbers, evennumbers);
-            let mut  tc_hesap = oddnumbers * 7 - evennumbers;
+            let tc_hesap = oddnumbers * 7 - evennumbers;
             tc_check(tc_hesap, digits, muthistoplam);
             //divider(digits); //dividing digits and printing them
         }
@@ -58,9 +58,6 @@ fn main() {
 }
 
 fn tc_check(mut tc_hesap: usize, digits: Vec<usize>, muthistoplam: usize) {
-    if tc_hesap >= 0 {
-
-        info!("Passed more than 0 test {}", tc_hesap);
 
         tc_hesap += 10;
 
@@ -78,18 +75,7 @@ fn tc_check(mut tc_hesap: usize, digits: Vec<usize>, muthistoplam: usize) {
             warn!("Beceremedin mal! al sana hata! {}, {}", digits[9], tc_hesap / 10);
         }
     }
-}
 
-
-pub fn divider(digits: Vec<usize>) { //the divider, divides the vector and prints it, the vector needs to be usize ofc
-    for oddnumber in digits.iter().enumerate().step_by(2) {
-        println!("{:?}", oddnumber);
-        let guacamole = oddnumber;
-        println!("{:?}", guacamole)
-        //let sum: usize = oddnumber.iter().sum();
-        //println!("{}", sum)
-    }
-}
 
  /*pub fn partition_by_parity(nums: &mut [i64]) {
     let (even, odd): (Vec<_>, Vec<_>) = nums.iter().partition(|&x| x % 2 == 0);

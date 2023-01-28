@@ -1,4 +1,5 @@
 use std::io::{self};
+use std::process::exit;
 use goto::gpoint;
 
 extern crate log; //for logging
@@ -8,33 +9,33 @@ use log::{info, warn}; //using info and warn logging for now
 
 
 fn main() {
-
     env_logger::init(); //initialise logging
 
-    info!("başlıyoruz...");
+    info!("here we go...");
 
     gpoint!['begin:
 
-    println!("- TC No Giriniz: "); //asking user to get tc_no input
+    println!("TC Kimlik No Giriniz: "); //asking user to get tc_no input
 
-    let tc_no = get_input().trim().parse::<i64>().unwrap(); //getting input as tc_no with i64
+    let tc_no = get_input().trim().parse::<u64>().unwrap(); //getting input as tc_no as u64
 
-    info!("The input entered by User is {}.",tc_no); //if a number have been entered, the number is logged
+    info!("The input entered by User is {}.", tc_no); //if a number have been entered, the number is logged
 
-        let digits = x(tc_no as usize); //converting the input to a vector
+        let digits: Vec<u32> = tc_no.to_string().chars().map(|d| d.to_digit(10).unwrap()).collect(); //converting the input to a vector
 
         let sayim = digits.len(); //counting vector
 
         if sayim == 11 {
 
-            let oddnumbers:usize = digits[0..10].iter().step_by(2).sum();
-            let evennumbers:usize = digits[1..7].iter().step_by(2).sum();
-            let muthistoplam:usize = digits[0..10].iter().sum();
-
             info!("Sayı 11 haneli, devam ediliyor");//if the input has 11 numbers, it is logged and program continues
-            println!("{}, {}", oddnumbers, evennumbers);
-            let tc_hesap = oddnumbers * 7 - evennumbers;
-            tc_check(tc_hesap, digits, muthistoplam);
+
+            let oddnumbers:u32 = digits[0..10].iter().step_by(2).sum(); //getting sum of odd digits
+            let evennumbers:u32 = digits[1..7].iter().step_by(2).sum(); //getting sum of even digits
+            let marveloustotal:u32 = digits[0..10].iter().sum();
+
+            let tc_calc = oddnumbers * 7 - evennumbers; //calculating as for the Turkish ID Number Algorithm
+
+            tc_check(tc_calc, digits, marveloustotal, tc_no);
         }
 
         else {
@@ -42,37 +43,30 @@ fn main() {
             continue 'begin
         }
     ];
-}
 
-fn tc_check(mut tc_hesap: usize, digits: Vec<usize>, muthistoplam: usize) {
 
-        tc_hesap += 10;
+    fn tc_check(mut tc_calc: u32, digits: Vec<u32>, marveloustotal: u32, tc_no: u64) { //identifying integers as original to ease of understanding about the algorithm
 
-        info!("the new hesap is {}", tc_hesap);
+        tc_calc += 10;
 
-        if digits[9] == tc_hesap % 10 {
+        info!("The new calculation is {}", tc_calc); //for debugging purposes
 
-            info!("muthistoplam: {}", muthistoplam);
+        if digits[9] == tc_calc % 10 { //as for Turkish ID Number Algorithm, 10th digit must be equal to mod of tc_calc
 
-            if digits[10] == muthistoplam % 10 {
-                println!("Becerdin mal!");
+            info!("Marvelous total is: {}", marveloustotal); //for debugging purposes
+
+            if digits[10] == marveloustotal % 10 { //as for Turkish ID Number Algorithm, 11th digit must be equal to mod of marveloustotal
+                println!("{} geçerli bir TC Kimlik Numarası!", tc_no);
+                exit(0);
             }
         }
         else {
-            warn!("Beceremedin mal! al sana hata! {}, {}", digits[9], tc_hesap / 10);
+            println!("{} geçerli bir TC Kimlik Numarası Değil!", tc_no); //if the number entered is not a valid ID number, it is informed to user
+            warn!("The number is rejected because of mismatch between {} and {}", digits[9], tc_calc / 10); //for troubleshooting purposes
+            drop(main);
+            exit(1);
         }
     }
-
-fn x(n: usize) -> Vec<usize> {
-    fn x_inner(n: usize, xs: &mut Vec<usize>) {
-        if n >= 10 {
-            x_inner(n / 10, xs);
-        }
-        xs.push(n % 10);
-    }
-    let mut xs = Vec::new();
-    x_inner(n, &mut xs);
-    xs
 }
 
 fn get_input() -> String {

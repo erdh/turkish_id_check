@@ -59,7 +59,15 @@ fn main() {
                 println!("{} geçerli bir TC Kimlik Numarası!", tc_no);
                 exit(0);
             }
+
+            else {
+                println!("{} geçerli bir TC Kimlik Numarası Değil!", tc_no); //if the number entered is not a valid ID number, it is informed to user
+                warn!("The number is rejected because of mismatch between {} and {}", digits[10], marveloustotal % 10); //for troubleshooting purposes
+                drop(main);
+                exit(1);
+            }
         }
+
         else {
             println!("{} geçerli bir TC Kimlik Numarası Değil!", tc_no); //if the number entered is not a valid ID number, it is informed to user
             warn!("The number is rejected because of mismatch between {} and {}", digits[9], tc_calc / 10); //for troubleshooting purposes

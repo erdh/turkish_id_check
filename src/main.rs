@@ -56,7 +56,7 @@ fn main() {
             info!("Marvelous total is: {}", marveloustotal); //for debugging purposes
 
             if digits[10] == marveloustotal % 10 { //as for Turkish ID Number Algorithm, 11th digit must be equal to mod of marveloustotal
-                println!("{} geçerli bir TC Kimlik Numarası!", tc_no);
+                println!("{} geçerli bir TC Kimlik Numarası!", tc_no); //the input entered is valid!
                 exit(0);
             }
 
@@ -70,11 +70,12 @@ fn main() {
 
         else {
             println!("{} geçerli bir TC Kimlik Numarası Değil!", tc_no); //if the number entered is not a valid ID number, it is informed to user
-            warn!("The number is rejected because of mismatch between {} and {}", digits[9], tc_calc / 10); //for troubleshooting purposes
+            warn!("The number is rejected because of mismatch between {} and {}", digits[9], tc_calc % 10); //for troubleshooting purposes
             drop(main);
             exit(1);
         }
     }
+    //TODO: make better if/else statements
 }
 
 fn get_input() -> String {

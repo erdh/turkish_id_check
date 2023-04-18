@@ -19,9 +19,10 @@ Afterward, just input 11-digit ID to prompt "TC Kimlik No Giriniz:" and let the 
 To debug and learn why input is rejected pass `RUST_LOG=info` environment variable
 
 # The Algorithm
-If we name each digit as _d(n)_ where leftmost digit is called _d1_ and the rightmost _d11_, a given ID is valid if:
+If we name each digit as _d(n)_ where leftmost digit is called _d1_ and the rightmost _d11_, a given ID is validated if:
 
 > _d1_ > 0
+
 and
 
 > _n_ = (_d1_ + _d3_ + _d5_ + _d7_ + _d9_) * 7 - (_d2_ + _d4_ + _d6_ + _d8_)
@@ -29,6 +30,7 @@ and
 > if _n_ < 0 then _n_ = _n_ + 10
 >
 > _d10_ = _n_ mod 10
+
 and
 
 > _d11_ = sum(_d1_.._d10_) mod 10 
